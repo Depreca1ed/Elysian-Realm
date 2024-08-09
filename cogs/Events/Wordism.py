@@ -21,7 +21,7 @@ class Wordism(commands.Cog):
     @commands.Cog.listener("on_member_join")
     async def welcome_event(self, member: discord.Member) -> discord.Message:
         ch = cast(discord.TextChannel, self.bot.guild.get_channel(1262409199992705105))
-        if datetime.timedelta(seconds=datetime.datetime.now().timestamp() - member.created_at.timestamp()).days <= 60:
+        if datetime.timedelta(seconds=datetime.datetime.now().timestamp() - member.created_at.timestamp()).days <= 14:
             # await member.kick(reason=ModerationFlags.NEW_ACCOUNT)
             return await ch.send(
                 content=inspect.cleandoc(
