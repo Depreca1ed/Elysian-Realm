@@ -18,13 +18,13 @@ log: logging.Logger = logging.getLogger(__name__)
 
 class Elysian(commands.Bot):
     prefix: list[str] = ["e!", "E!"]
-    colour = color = 0x2B285E
+    colour = color = 0xFFFFFF
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         intents: discord.Intents = discord.Intents.all()
         super().__init__(
             command_prefix=self.get_prefix,  # type: ignore
-            description="Description Placeholder",
+            description="Custom Bot for Wordism server.",
             case_insensitive=True,
             strip_after_prefix=True,
             intents=intents,
@@ -36,8 +36,6 @@ class Elysian(commands.Bot):
         )
 
         self.token = str(self.config.get("TOKENS", "bot"))
-        self.catapi_token = str(self.config.get("TOKENS", "cat_api"))
-        self.dogapi_token = str(self.config.get("TOKENS", "dog_api"))
         self.session = aiohttp.ClientSession()
         self.mystbin = mystbin.Client()
         self.load_time = datetime.datetime.now(datetime.UTC)
