@@ -1,11 +1,12 @@
+import datetime
+import inspect
+from enum import StrEnum
+from typing import cast
+
 import discord
 from discord.ext import commands
-import datetime
 
 from bot import Elysian
-from typing import cast
-from enum import StrEnum
-import inspect
 
 
 class ModerationFlags(StrEnum):
@@ -14,11 +15,11 @@ class ModerationFlags(StrEnum):
 
 class Wordism(commands.Cog):
 
-    def __init__(self, bot: Elysian):
+    def __init__(self, bot: Elysian) -> None:
         self.bot = bot
 
     @commands.Cog.listener("on_member_join")
-    async def welcome_event(self, member: discord.Member):
+    async def welcome_event(self, member: discord.Member) -> discord.Message:
         ch = cast(discord.TextChannel, self.bot.guild.get_channel(1262409199992705105))
         if datetime.timedelta(seconds=datetime.datetime.now().timestamp() - member.created_at.timestamp()).days <= 60:
             # await member.kick(reason=ModerationFlags.NEW_ACCOUNT)
@@ -33,11 +34,11 @@ class Wordism(commands.Cog):
         return await ch.send(content=(f"**{member.name}** just joined the server!"))
 
     @commands.Cog.listener("on_member_remove")
-    async def leave_event(self, member: discord.Member):
+    async def leave_event(self, member: discord.Member) -> discord.Message:
         # TODO: Add a persistent roles functionality in this event as well as `welcome_event`
         ch = cast(discord.TextChannel, self.bot.guild.get_channel(1262409199992705105))
         return await ch.send(content=f"**{member.name}** left the server. Unfortunate.")
 
 
-async def setup(bot: Elysian):
+async def setup(bot: Elysian) -> None:
     await bot.add_cog(Wordism(bot))
